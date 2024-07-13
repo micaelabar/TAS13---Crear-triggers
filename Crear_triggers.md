@@ -15,6 +15,7 @@ END;
 $$ LANGUAGE plpgsql;
 ````
 -Captura.
+
 <imag!![image](https://github.com/user-attachments/assets/660a5dec-ecdd-430a-a082-693093f3a630)
 
 
