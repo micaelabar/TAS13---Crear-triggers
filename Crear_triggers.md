@@ -3,19 +3,20 @@
 ### Crear la función de validación
  - Sentencia:
 ```
-CREATE OR REPLACE FUNCTION validar_cedula()
+CREATE OR REPLACE FUNCTION validate_cedula()
 RETURNS TRIGGER AS $$
 BEGIN
 
     IF LENGTH(NEW.cedula) != 10 OR NEW.cedula !~ '^[0-9]+$' THEN
-        RAISE EXCEPTION 'El número de cédula debe tener exactamente 10 dígitos.';
+        RAISE EXCEPTION 'The ID number must have exactly 10 digits.';
     END IF;
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 ````
 -Captura.
-<imag!![image](https://github.com/user-attachments/assets/660a5dec-ecdd-430a-a082-693093f3a630)
+<imag!![image](https://github.com/user-attachments/assets/3f1fc66d-5177-47ea-b599-77ccb9883119)
+
 ### Crear el trigger que llama a la función.
  - Sentencia:
 ```
@@ -49,15 +50,51 @@ $$ LANGUAGE plpgsql;
 ````
 -Captura.
 
-<imag!![image](https://github.com/user-attachments/assets/54109edd-0ba6-4a6d-88b9-b43f24676236)
+<imag!![image](https://github.com/user-attachments/assets/242830e7-5c33-42e1-a388-9bc2b047b375)
+
 ### Crear el trigger.
  - Sentencia:
 ```
-CREATE TRIGGER trigger_disminuir_stock
+CREATE TRIGGER trigger_decrease_stock
 AFTER INSERT ON item
 FOR EACH ROW
-EXECUTE PROCEDURE disminuir_stock();
+EXECUTE PROCEDURE decrease_stock();
 ````
 -Captura.
 
-<imag!![image](https://github.com/user-attachments/assets/0f0c1cd6-28d4-4e84-997f-091e690d9be6)
+<imag!![image](https://github.com/user-attachments/assets/36c2e94b-e701-49b3-9a60-a76588b88041)
+
+## 3. Crear un función y un trigger para la tabla invoice donde valide que el campo create_at sea del año actual (fecha sistema).
+### Crear la función de validación.
+ - Sentencia:
+```
+CREATE OR REPLACE FUNCTION validate_current_date()
+RETURNS TRIGGER AS $$
+BEGIN
+   
+    IF EXTRACT(YEAR FROM NEW.create_at) != EXTRACT(YEAR FROM CURRENT_DATE) THEN
+        RAISE EXCEPTION 'The create_at date must be in the current year.';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+````
+-Captura.
+
+<imag!![image](https://github.com/user-attachments/assets/9c98a43b-07fc-4f39-ac19-c74c7ea8b65b)
+
+### Crear el trigger.
+ - Sentencia:
+```
+CREATE TRIGGER trigger_validate_current_date
+BEFORE INSERT ON invoice
+FOR EACH ROW
+EXECUTE PROCEDURE validate_current_date();
+````
+-Captura.
+
+<imag!![image](https://github.com/user-attachments/assets/c175261b-1d11-4596-b401-7178a16ed345)
+
+
+
+
