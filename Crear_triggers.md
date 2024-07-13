@@ -48,6 +48,7 @@ END;
 $$ LANGUAGE plpgsql;
 ````
 -Captura.
+
 <imag!![image](https://github.com/user-attachments/assets/54109edd-0ba6-4a6d-88b9-b43f24676236)
 ### Crear el trigger.
  - Sentencia:
@@ -58,4 +59,5 @@ FOR EACH ROW
 EXECUTE PROCEDURE disminuir_stock();
 ````
 -Captura.
+
 <imag!![image](https://github.com/user-attachments/assets/0f0c1cd6-28d4-4e84-997f-091e690d9be6)
