@@ -127,7 +127,7 @@ CREATE TABLE client (
 ````
 -Captura.
 
-<imag!![image](https://github.com/user-attachments/assets/4c7ef184-a16c-4b0d-8767-61917ec310e9)
+<imag![image](https://github.com/user-attachments/assets/4c7ef184-a16c-4b0d-8767-61917ec310e9)
 
 
 
