@@ -15,6 +15,7 @@ END;
 $$ LANGUAGE plpgsql;
 ````
 -Captura.
+
 <imag!![image](https://github.com/user-attachments/assets/3f1fc66d-5177-47ea-b599-77ccb9883119)
 
 ### Crear el trigger que llama a la función.
@@ -27,6 +28,7 @@ CREATE TABLE cliente (
 );
 ````
 -Captura.
+
 <imag!![image](https://github.com/user-attachments/assets/3e7ebdc4-1161-4e5a-b3d0-08e703cfe8bb)
 ## 2. Crear un función y un trigger para que cada vez que se inserte un nuevo registro en la tabla item se disminuya el stock de la tabla product.
 ### Crear la función de actualización del stock.
@@ -95,6 +97,37 @@ EXECUTE PROCEDURE validate_current_date();
 
 <imag!![image](https://github.com/user-attachments/assets/c175261b-1d11-4596-b401-7178a16ed345)
 
+## 4. Crear un función y un trigger para la tabla client y validar que el correo tenga un @.
+### Crear la función de validación.
+ - Sentencia:
+```
+CREATE OR REPLACE FUNCTION validate_mail()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Verify that the email field contains an '@'
+    IF POSITION('@' IN NEW.email) = 0 THEN
+        RAISE EXCEPTION 'Email must contain an @';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+````
+-Captura.
+
+<imag!![image](https://github.com/user-attachments/assets/a7ab97cd-3a33-42f2-b69f-173f2c510652)
+
+###  Crear el trigger que llama a la función.
+ - Sentencia:
+```
+CREATE TABLE client (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100)
+);
+````
+-Captura.
+
+<imag!![image](https://github.com/user-attachments/assets/4c7ef184-a16c-4b0d-8767-61917ec310e9)
 
 
 
